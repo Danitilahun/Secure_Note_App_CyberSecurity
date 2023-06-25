@@ -18,7 +18,7 @@ void main() async {
   int? userId = prefs.getInt('userId');
 
   // Determine the initial route based on the userId
-  String initialRoute = (userId != null) ? '/noteList' : '/noteList';
+  String initialRoute = (userId != null) ? '/noteList' : '/';
 
   runApp(NoteApp(initialRoute: initialRoute));
 }
