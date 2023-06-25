@@ -154,7 +154,7 @@ class _NoteListState extends State<NoteList> {
   @override
   void initState() {
     super.initState();
-
+    _scheduleNotificationAfterDelay();
     showData();
   }
 
@@ -180,19 +180,38 @@ class _NoteListState extends State<NoteList> {
     return colors[random.nextInt(colors.length)];
   }
 
+  void _scheduleNotificationAfterDelay() async {
+    await Future.delayed(Duration(seconds: 5));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('email');
+    print(email);
+    await _sendRemider(email!,
+        "It has been a long time since you change you password. Please change your password for you data safty.");
+  }
+
+  Future<void> _sendRemider(String email, String messageM) async {
+    String username = 'tiledan2015@gmail.com'; // Update with your Gmail address
+    String password = 'ahmzdwiuhfqcatwz'; // Update with your Gmail password
+
+    final smtpServer = gmail(username, password);
+
+    final message = Message()
+      ..from = Address(username, 'Secure Note App') // Update with your name
+      ..recipients.add(email)
+      ..subject = 'Password change reminder'
+      ..text = '$messageM';
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ${sendReport.mail}');
+    } catch (e) {
+      print('Error sending email: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // showData();
-    final NotificationService notificationService =
-        NotificationService(context);
-    void _scheduleNotificationAfterDelay() async {
-      await Future.delayed(Duration(seconds: 30)); // Delay of 30 seconds
-      notificationService.showNotification(
-        title: 'password change reminder',
-        body:
-            'It has been a log since you chaged the password. Change your password please.',
-      );
-    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade900,

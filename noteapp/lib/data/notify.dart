@@ -6,13 +6,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final BuildContext context;
 
-  NotificationService(this.context);
-
-  Future<void> initNotification() async {
+  Future<void> initNotification(BuildContext context) async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('');
 
     var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
@@ -20,8 +17,8 @@ class NotificationService {
         requestSoundPermission: true,
         onDidReceiveLocalNotification:
             (int id, String? title, String? body, String? payload) async {
-          if (payload == '/login') {
-            Navigator.pushNamed(context, '/login');
+          if (payload == '/password') {
+            Navigator.pushNamed(context, '/password');
           }
         });
 

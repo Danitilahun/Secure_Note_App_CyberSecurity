@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noteapp/data/dbhelper.dart';
+import 'package:noteapp/ui/screens/changePassword.dart';
 import 'package:noteapp/ui/screens/login_page.dart';
 import 'package:noteapp/ui/screens/noteList.dart';
 import 'package:noteapp/ui/screens/registration_page.dart';
@@ -17,7 +18,7 @@ void main() async {
   int? userId = prefs.getInt('userId');
 
   // Determine the initial route based on the userId
-  String initialRoute = (userId != null) ? '/noteList' : '/';
+  String initialRoute = (userId != null) ? '/noteList' : '/noteList';
 
   runApp(NoteApp(initialRoute: initialRoute));
 }
@@ -41,6 +42,7 @@ class NoteApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/noteList': (context) => NoteList(),
         '/verification': (context) => VerificationPage(),
+        '/password': (context) => ChangePasswordScreen(),
       },
     );
   }
